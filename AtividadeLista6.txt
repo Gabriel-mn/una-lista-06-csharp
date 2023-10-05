@@ -1,0 +1,85 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+	 Console.WriteLine("Bem-vindo ao questionário para identificação de possíveis infecções!");
+        Console.Write("Informe o seu nome: ");
+        string nome = Console.ReadLine();
+        
+        Console.Write("Informe a sua idade: ");
+        int idade = int.Parse(Console.ReadLine());
+
+        bool cartaoVacinaEmDia = PerguntaSimNao("Seu cartão de vacina está em dia?");
+        bool teveSintomasRecentemente = PerguntaSimNao("Teve algum dos sintomas recentemente? (dor de cabeça, febre, náusea, dor articular, gripe)");
+        bool teveContatoComInfectados = PerguntaSimNao("Teve contato com pessoas com sintomas gripais nos últimos dias?");
+        bool retornandoDeViagem = PerguntaSimNao("Está retornando de viagem realizada no exterior?");
+        
+        int porcentagemRisco = 0;
+
+        if (!cartaoVacinaEmDia)
+            porcentagemRisco += 10;
+        if (teveSintomasRecentemente)
+            porcentagemRisco += 30;
+        if (teveContatoComInfectados)
+            porcentagemRisco += 30;
+        if (retornandoDeViagem)
+            porcentagemRisco += 30;
+
+        Console.WriteLine("Nome: " + nome);
+        Console.WriteLine("Idade: " + idade);
+        Console.WriteLine("Cartão de vacina em dia: " + (cartaoVacinaEmDia ? "SIM" : "NAO"));
+        Console.WriteLine("Teve sintomas recentemente: " + (teveSintomasRecentemente ? "SIM" : "NAO"));
+        Console.WriteLine("Teve contato com pessoas infectadas: " + (teveContatoComInfectados ? "SIM" : "NAO"));
+        Console.WriteLine("Retornando de viagem: " + (retornandoDeViagem ? "SIM" : "NAO"));
+        Console.WriteLine("Probabilidade de infecção: " + porcentagemRisco + "%");
+
+        if (porcentagemRisco <= 30)
+        {
+            Console.WriteLine("Paciente sob observação. Caso apareça algum sintoma, gentileza buscar assistência médica.");
+        }
+        else if (porcentagemRisco <= 60)
+        {
+            Console.WriteLine("Paciente com risco de estar infectado. Gentileza aguardar em lockdown por 02 dias para ser acompanhado.");
+        }
+        else if (porcentagemRisco <= 89)
+        {
+            Console.WriteLine("Paciente com alto risco de estar infectado. Gentileza aguardar em lockdown por 05 dias para ser acompanhado.");
+        }
+        else
+        {
+            Console.WriteLine("Paciente crítico! Gentileza aguardar em lockdown por 10 dias para ser acompanhado.");
+        }
+
+        if (retornandoDeViagem)
+        {
+            Console.WriteLine("Você ficará sob observação por 05 dias.");
+        }
+
+        Console.ReadLine();
+    }
+
+    static bool PerguntaSimNao(string pergunta)
+    {
+        int tentativas = 0;
+        while (true)
+        {
+            Console.Write(pergunta + " (SIM/NAO): ");
+            string resposta = Console.ReadLine().Trim().ToUpper();
+            if (resposta == "SIM")
+                return true;
+            else if (resposta == "NAO")
+                return false;
+            
+            tentativas++;
+            if (tentativas >= 3)
+            {
+                Console.WriteLine("Não foi possível realizar o diagnóstico.");
+                Console.WriteLine("Gentileza procurar ajuda médica caso apareça algum sintoma.");
+                Environment.Exit(1);
+            }
+            Console.WriteLine("Resposta inválida. Por favor, responda com 'SIM' ou 'NAO'.");
+        }
+    }
+}

@@ -1,0 +1,10 @@
+Um vetor é uma coleção unidimensional de elementos do mesmo tipo, acessados por índices.
+
+int[] vetor = new int[5];
+vetor[0] = 10;
+Uma matriz é uma coleção bidimensional de elementos organizados em linhas e colunas, acessados por dois índices.
+int[,] matriz = new int[3, 3];
+matriz[0, 0] = 1;
+Um cubo é uma extensão da matriz com três dimensões (linhas, colunas e profundidade) para representar dados tridimensionais.
+int[,,] cubo = new int[2, 2, 2];
+cubo[0, 0, 0] = 1;
